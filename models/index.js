@@ -9,9 +9,9 @@ var pageSchema = new mongoose.Schema({
 	title: {type: String, required: true},
 	urlTitle: {type: String, required: true},
 	content: {type: String, required: true},
-	date: {Date, default: Date.now },
+	date: {type: Date, default: Date.now },
 	status: {type:String, enum:['open', 'closed']},
-	author: mongoose.Schema.Types.ObjectID, ref: 'User'
+	author: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 })
 
 pageSchema.virtual('route').get(function () {
@@ -30,7 +30,7 @@ var User = mongoose.model('User', userSchema);
 // Page.findOne({title: "???" })
 // 	Page.populate('author')
 
-module.export = {
+module.exports = {
 	Page: Page,
 	User: User
 };

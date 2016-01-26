@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var port = process.env.PORT || 8080;
 var routes = require('./routes/');
+var wikiRoutes = require('./routes/wiki');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var swig = require('swig');
@@ -25,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // for HTML form submits
 app.use(bodyParser.json());
 
 //All routes go to routes
+app.use('/wiki/', wikiRoutes);
 app.use('/', routes);
 
 
