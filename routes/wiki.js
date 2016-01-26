@@ -13,7 +13,9 @@ router.get('/add', function (req, res, next) {
 })
 
 router.get('/:urlTitle', function (req, res, next) {
-  Page.findOne({ 'urlTitle': req.params.urlTitle }).then(function(page){
+  Page.findOne({ 'urlTitle': req.params.urlTitle }).populate('author')
+  .then(function(page){
+    console.log(page);
     res.render('wikipage', page);
   }, function(err){
     res.send(err)
@@ -32,8 +34,7 @@ router.post('/', function(req, res, next) {
   var page = new Page({
     title: req.body.title,
     content: req.body.content,
-    tags: req.body.tags.split(" "),
-    author: user_id
+    tags: req.body.tags.split(" ")
   });
 
   User.findOrCreate(req.body).then(function (user) {
@@ -41,11 +42,7 @@ router.post('/', function(req, res, next) {
     return page.save();
   }).then(function (savedPage) {
     res.redirect(savedPage.route);
-  }).catch(next)
-  .then(function(data) {
-    console.log(data);
-    res.redirect(data.route);
-    }, function(err) {console.log(err)});
+  }, function(err) {console.log(err);});
 });
 
 

@@ -39,15 +39,15 @@ var userSchema = new mongoose.Schema({
 
 userSchema.statics.findOrCreate = function (userObj) {
 	var self = this;
-	return self.findOne({ 'email': userObj.email }).exec()
+	return self.findOne({ email: userObj.email }).exec()
 	.then(function(user){ if(user) {
 		//user exits - return a promise for it
 		return user;
 	} else {
 		//no user
 		  return self.create({
-    		name: userObj.name,
-    		email: userObj.name
+    		name: userObj.author,
+    		email: userObj.email
   		});
 		}
 	});
