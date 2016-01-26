@@ -4,6 +4,7 @@ var Page = models.Page;
 var User = models.User; 
 
 
+
 router.get('/add', function (req, res, next) {
   res.render('addpage');
 })

@@ -1,7 +1,17 @@
 var router = require('express').Router();
+var models = require('../models/');
+var Page = models.Page; 
+var User = models.User; 
 
 router.get('/', function (req, res, next) {
-  res.render('index');
+  Page.find().then(function(pages){
+    res.render('index', {pages: pages});
+  }, function(err) {
+    res.send(err);
+    next();
+  });
+
+
 });
 
 

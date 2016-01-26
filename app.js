@@ -6,6 +6,7 @@ var wikiRoutes = require('./routes/wiki');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var swig = require('swig');
+require('./filters')(swig);
 var path = require('path');
 var fs = require('fs');
 
