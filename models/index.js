@@ -14,6 +14,11 @@ var pageSchema = new mongoose.Schema({
 	author: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 })
 
+pageSchema.pre('validate', function(next) {
+  this.urlTitle = urlify(this.title);
+  next();
+});
+
 pageSchema.virtual('route').get(function () {
 	return "/wiki/" + this.urlTitle;
 });
@@ -29,6 +34,12 @@ var User = mongoose.model('User', userSchema);
 // populate practice
 // Page.findOne({title: "???" })
 // 	Page.populate('author')
+
+function urlify (str){
+    return str ? str.replace(/\s/g, "_").replace(/\W/g, ""): Math.random().toString(36).substring(2, 7);
+
+}
+
 
 module.exports = {
 	Page: Page,

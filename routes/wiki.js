@@ -4,9 +4,20 @@ var Page = models.Page;
 var User = models.User; 
 
 
+router.get('/add', function (req, res, next) {
+  res.render('addpage');
+})
 
-router.get('/', function (req, res, next) {
-  res.redirect('/');
+router.get('/:urlTitle', function (req, res, next) {
+  Page.findOne({ 'urlTitle': req.params.urlTitle }).then(function(page){
+    res.render('wikipage', page);
+  }, function(err){
+    res.send(err)
+    next();
+  })
+  // search the database for this
+
+  // res.redirect('/');
 })
 
 router.post('/', function(req, res, next) {
@@ -19,22 +30,12 @@ router.post('/', function(req, res, next) {
     content: req.body.content
   });
 
-  // STUDENT ASSIGNMENT:
-  // make sure we only redirect *after* our save is complete!
-  // note: `.save` returns a promise or it can take a callback.
   page.save()
-  .then(function() {
-    res.redirect('/');}, function(err) {console.log(err)});
-  
-  // -> after save -> res.redirect('/');
+  .then(function(data) {
+    console.log(data);
+    res.redirect(data.route);
+    }, function(err) {console.log(err)});
 });
-
-router.get('/add', function (req, res, next) {
-  res.render('addpage');
-})
-
-
-
 
 
 module.exports = router;
