@@ -10,6 +10,7 @@ var pageSchema = new mongoose.Schema({
 	urlTitle: {type: String, required: true},
 	content: {type: String, required: true},
 	date: {type: Date, default: Date.now },
+	tags: {type: Array},
 	status: {type:String, enum:['open', 'closed']},
 	author: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 })
