@@ -10,7 +10,7 @@ var pageSchema = new mongoose.Schema({
 	urlTitle: {type: String, required: true},
 	content: {type: String, required: true},
 	date: {type: Date, default: Date.now },
-	tags: {type: Array},
+	tags: {type: Array, index: true},
 	status: {type:String, enum:['open', 'closed']},
 	author: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 })
@@ -29,9 +29,7 @@ pageSchema.statics.findByTag = function (tag) {
 }
 
 pageSchema.methods.findSimilar = function(){
-	var tagsArrSearch = this.tags;
-	var urlTitleSearch = this.urlTitle;
-	return this.model('Page').find({tags: {$in: tagsArrSearch},  urlTitle: {$ne: urlTitleSearch}});
+	return this.model('Page').find({tags: {$in: this.tags},  urlTitle: {$ne: this.urlTitle}});
 }
 
 var userSchema = new mongoose.Schema({
