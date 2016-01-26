@@ -29,10 +29,16 @@ router.post('/', function(req, res, next) {
   var page = new Page({
     title: req.body.title,
     content: req.body.content,
-    tags: req.body.tags.split(" ")
+    tags: req.body.tags.split(" "),
+    author: user_id
   });
 
-  page.save()
+  User.findOrCreate(req.body).then(function (user) {
+    page.author = user._id;
+    return page.save();
+  }).then(function (savedPage) {
+    res.redirect(savedPage.route);
+  }).catch(next)
   .then(function(data) {
     console.log(data);
     res.redirect(data.route);

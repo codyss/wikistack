@@ -13,7 +13,7 @@ var pageSchema = new mongoose.Schema({
 	tags: {type: Array},
 	status: {type:String, enum:['open', 'closed']},
 	author: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
-})
+});
 
 pageSchema.pre('validate', function(next) {
   this.urlTitle = urlify(this.title);
@@ -25,13 +25,29 @@ pageSchema.virtual('route').get(function () {
 });
 
 pageSchema.statics.findByTag = function (tag) {
-	return this.find({ tags: {$elemMatch: { $eq: tag}}})
-}
+	return this.find({ tags: {$elemMatch: { $eq: tag}}});
+};
 
 var userSchema = new mongoose.Schema({
 	name: {type: String, required: true},
 	email: { type: String, required:true, unique: true, trim: true }
-})
+});
+
+userSchema.statics.findOrCreate = function (userObj) {
+	var self = this;
+	return self.findOne({ 'email': userObj.email }).exec()
+	.then(function(user){ if(user) {
+		//user exits - return a promise for it
+		return user;
+	} else {
+		//no user
+		  return self.create({
+    		name: userObj.name,
+    		email: userObj.name
+  		});
+		}
+	});
+};
 
 var Page = mongoose.model('Page', pageSchema);
 var User = mongoose.model('User', userSchema);
