@@ -3,7 +3,7 @@
 {% block content %}
  <h3>{{title}} <small> (<a href="{{route}}">Similar</a>)</small></h3>
  <h4>by <a href="/wiki/{{author.name}}">{{author.name}}</a></h4>
- <div>{% for tag in tags %} <a href="/search/{{tag}}">#{{tag}}</a>  {% endfor %}</div>
+ <div>{% for tag in tags %} <a href="/search/?tag={{tag}}">#{{tag}}</a>  {% endfor %}</div>
  <hr/>
  <div>PLACEHOLDER AUTHOR NAME WITH LINK TO AUTHOR PAGE</div>
  <div class="page-body">{{content}}</div>

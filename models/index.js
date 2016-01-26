@@ -24,6 +24,10 @@ pageSchema.virtual('route').get(function () {
 	return "/wiki/" + this.urlTitle;
 });
 
+pageSchema.statics.findByTag = function (tag) {
+	return this.find({ tags: {$elemMatch: { $eq: tag}}})
+}
+
 var userSchema = new mongoose.Schema({
 	name: {type: String, required: true},
 	email: { type: String, required:true, unique: true, trim: true }
