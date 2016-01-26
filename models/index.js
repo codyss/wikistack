@@ -28,6 +28,12 @@ pageSchema.statics.findByTag = function (tag) {
 	return this.find({ tags: {$elemMatch: { $eq: tag}}})
 }
 
+pageSchema.methods.findSimilar = function(){
+	var tagsArrSearch = this.tags;
+	var urlTitleSearch = this.urlTitle;
+	return this.model('Page').find({tags: {$in: tagsArrSearch},  urlTitle: {$ne: urlTitleSearch}});
+}
+
 var userSchema = new mongoose.Schema({
 	name: {type: String, required: true},
 	email: { type: String, required:true, unique: true, trim: true }
