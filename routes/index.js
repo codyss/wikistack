@@ -8,7 +8,6 @@ router.get('/', function (req, res, next) {
     res.render('index', {pages: pages});
   }, function(err) {
     res.send(err);
-    next();
   });
 
 

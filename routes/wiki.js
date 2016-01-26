@@ -4,6 +4,9 @@ var Page = models.Page;
 var User = models.User; 
 
 
+router.get('/', function (req, res, next) {
+  res.redirect('/');
+});
 
 router.get('/add', function (req, res, next) {
   res.render('addpage');

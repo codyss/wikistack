@@ -4,6 +4,7 @@ var port = process.env.PORT || 8080;
 var routes = require('./routes/');
 var wikiRoutes = require('./routes/wiki');
 var searchRoutes = require('./routes/search');
+var userRoutes = require('./routes/users');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var swig = require('swig');
@@ -30,6 +31,7 @@ app.use(bodyParser.json());
 //All routes go to routes
 app.use('/wiki/', wikiRoutes);
 app.use('/search/', searchRoutes);
+app.use('/users/', userRoutes);
 app.use('/', routes);
 
 
