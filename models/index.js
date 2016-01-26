@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var marked = require('marked');
 // Notice the `mongodb` protocol; Mongo is basically a kind of server,
 // which handles database requests and sends responses. It's async!
 mongoose.connect('mongodb://localhost/wikistack'); // <= db name will be 'wikistack'
@@ -22,6 +23,10 @@ pageSchema.pre('validate', function(next) {
 
 pageSchema.virtual('route').get(function () {
 	return "/wiki/" + this.urlTitle;
+});
+
+pageSchema.virtual('renderedContent').get(function() {
+	return marked(this.content);
 });
 
 pageSchema.statics.findByTag = function (tag) {

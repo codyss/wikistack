@@ -34,6 +34,7 @@ router.post('/', function(req, res, next) {
   var page = new Page({
     title: req.body.title,
     content: req.body.content,
+    status: req.body.status,
     tags: req.body.tags.split(" ")
   });
 
