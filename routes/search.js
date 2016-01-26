@@ -20,12 +20,12 @@ router.get('/', function(req, res, next){
 		}
 
 	else if (req.query.urlTitle) {
-		Page.find({ 'urlTitle': req.query.urlTitle }).then(function(page){
-
+		Page.findOne({ 'urlTitle': req.query.urlTitle }).then(function(page){
+			console.log(page);
 			page.findSimilar().then(function(pages){
 				res.render('index', {pages:pages})
-			}, 
-			function(err) {
+				}, 
+				function(err) {
 			    res.send(err);
 			    next();
 		  	});
